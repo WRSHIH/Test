@@ -4,7 +4,7 @@ from store.csv_store import load_data, save_data
 
 
 def main():
-        
+    
     try:
         student_data = load_data()
     except:
@@ -15,7 +15,13 @@ def main():
         commend = get_user_commend()
         if commend == "exit":
             break
-        process_commend(commend, student_data)
+        process_commend(commend, student_data)  
+   
+    try:
+        save_data(student_data)
+    except:
+        print('error happend')
+        return
         
 
 

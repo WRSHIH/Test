@@ -1,4 +1,4 @@
-COMMEND_LIST = {"list", "add", "edit", "delete", "average" "exit"}
+COMMEND_LIST = {"list", "add", "edit", "delete", "average", "exit"}
 
 
 def get_user_commend() -> str:
@@ -6,6 +6,6 @@ def get_user_commend() -> str:
         commend = input('Please input commend: ')
         cmd = commend.lower()
         if cmd not in COMMEND_LIST:
-            print(f'\' {cmd}\' is not a valid commend')
+            print(f"{cmd} is not a valid commend")
         else:
             return cmd
