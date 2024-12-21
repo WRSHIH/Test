@@ -1,92 +1,69 @@
-from common import course_def
+from common.common_def import ITEMS_SET
 
 
-def process_list(student_data: dict):
-    records = list(student_data.values())
-    records.sort(key = lambda a: a.get("name"))
+def process_list(expensure_data: dict):
+    records = list(expensure_data.values())
     
     for record in records:
-        print(record.get("name"))
-        for course in course_def.COURSE_NAME_SET:
-            print(f"{course} score: {record.get(course)}")
+        print(record.get("date"))
+        for item in ITEMS_SET:
+            print(f"{item}: {record.get(item)}")
         print("  ")
 
 
-def process_add(student_data: dict):
-    name = input("Please enter name: ")
-    chinese_score = input("Please input chinese score: ")
-    english_score = input("Please input english score: ")
-    math_score = input("Please input math score: ")
+def process_add(expensure_data: dict):
+    date = input("Please enter date (YYYYMMDD): ")
+    name = input("Please input expense name: ")
+    expense = input("Please input expense amount: ")
+    category = input("Please input category: ")
     
     records = {
-        "name":name,
-        "chinese":int(chinese_score),
-        "english":int(english_score),
-        "math":int(math_score)
+        "date":date,
+        "name":str(name),
+        "expense":int(expense),
+        "category":str(category)
     }
-    student_data[name] = records
-    print(f"Added student scores for {name} succcessfully")
+    expensure_data[date] = records
+    print(f"Expense for {name} on {date} was added succcessfully")
     
-def process_edit(student_data: dict):
-    name = input("Please input name: ")
-    if name in student_data:
-        course = input("Please input course name: ")
-        if course in course_def.COURSE_NAME_SET:
-            score = input("Please input score: ")
-            student_data[name].update({course:int(score)})
-            print(f"Updated score for '{name}' successfully")
+def process_edit(expensure_data: dict):
+    date = input("Please enter date (YYYYMMDD): ")
+    if date in expensure_data:
+        name = input("Please input expense name: ")
+        expense = input("Please input expense amount: ")
+        category = input("Please input category: ")
+         
+        expensure_data[date].update({
+            "date":date,
+            "name":str(name),
+            "expense":int(expense),
+            "category":str(category)
+            })
+        print(f"Record updated on '{date}' successfully")
             
-        else:
-            print(f"Course {course} is not supported.")
-            
-    
     else:
-        print(f"Student {name} dose not exist.")
+        print(f"Record on {date} dose not exist.")
 
 
-def process_delete(student_data: dict):
-    name = input("Please input name: ")
-    if name in student_data.keys(): 
-        student_data.pop(name)
-        print(f"Delete '{name}' successfully")
+
+def process_delete(expensure_data: dict):
+    date = input("Please enter date (YYYYMMDD): ")
+    if date in expensure_data.keys(): 
+        expensure_data.pop(date)
+        print(f"Delete record on '{date}' successfully")
     else:
-        print(f"Student '{name}' dose not exist!")
+        print(f"Record on {date} dose not exist.")
         
 
 
-def process_average(student_data: dict):
-    student_account = len(student_data)
-    if student_account == 0:
-        print("No student scores")
-        return
-    
-    total_result = {}
-    for course in course_def.COURSE_NAME_SET:
-        total_result[course] = 0
-        
-    for record in student_data.values():
-        for course in course_def.COURSE_NAME_SET:
-            total_result[course] = total_result[course] + int(record.get(course))
-    
-    for course in course_def.COURSE_NAME_SET:
-        average = total_result[course]/ student_account
-        print(f"average score of {course} is {average}")
 
 
-def process_exit(student_data: dict):
-    pass
-
-
-
-
-def process_commend(cmd: str, student_data: dict):
+def process_commend(cmd: str, expensure_data: dict):
     if cmd == "list":
-        process_list(student_data)
+        process_list(expensure_data)
     elif cmd == "add":
-        process_add(student_data)
+        process_add(expensure_data)
     elif cmd == "edit":
-        process_edit(student_data)
+        process_edit(expensure_data)
     elif cmd == "delete":
-        process_delete(student_data)
-    elif cmd == "average":
-        process_average(student_data)
+        process_delete(expensure_data)

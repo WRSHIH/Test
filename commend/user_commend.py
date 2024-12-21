@@ -1,4 +1,4 @@
-COMMEND_LIST = {"list", "add", "edit", "delete", "average", "exit"}
+from common.common_def import COMMEND_LIST
 
 
 def get_user_commend() -> str:
@@ -9,3 +9,4 @@ def get_user_commend() -> str:
             print(f"{cmd} is not a valid commend")
         else:
             return cmd
+        
